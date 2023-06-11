@@ -1,15 +1,15 @@
 import React from 'react'
 
 const ListItem = ({ item }) => {
-  // const clickHandler = () => {
-  //   alert('Click'); 
-  // }
+  const clickHandler = () => {
+    // document.querySelector(".todo-list-item").classList.toggle('important');
+  }
 
   return (
     <li className="list-group-item">
       <span className={`todo-list-item ${item.done ? 'done' : ''} ${item.important ? 'important' : ''}`}>
         <span className="todo-list-item-label">{item.title}</span>
-        <button onClick={() => { alert('ghghg') }} type="button" className="btn btn-outline-success btn-sm float-end">
+        <button onClick={clickHandler} type="button" className="btn btn-outline-success btn-sm float-end">
           <i className="fa fa-exclamation"></i>
         </button>
         <button type="button"
