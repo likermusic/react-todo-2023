@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 import ListItem from './ListItem'
 
-const List = () => {
+const List = ({ getTasks }) => {
   const initialData = [
     { id: 1, title: 'To drink coffee', done: true, important: true },
     { id: 2, title: 'To wash car', done: true, important: false },
@@ -34,6 +34,8 @@ const List = () => {
     let newTasks = [...tasks];
     newTasks[ind].done = !newTasks[ind].done;
     setTasks(newTasks);
+
+    getTasks(tasks);
   }
 
   const deleteItemHandler = (id) => {
@@ -42,12 +44,11 @@ const List = () => {
     });
 
     let newTasks = [...tasks];
-    console.log(tasks);
+    // console.log(tasks);
     newTasks.splice(ind, 1);
     setTasks(newTasks);
-    console.log(tasks);
+    // console.log(tasks);
   }
-
 
   // const items = tasks.map((item) => (
   //   <ListItem key={item.id} item={item} />
@@ -59,6 +60,9 @@ const List = () => {
       key={item.id}
       item={item}
       onDeleteItem={(id) => deleteItemHandler(id)}
+      onDone={(id) => doneHandler(id)}
+      onImportant={(id) => importantHandler(id)}
+
     // onDeleteItem={(id) => deleteItemHandler()}
     // onDeleteItem={deleteItemHandler}
     />
