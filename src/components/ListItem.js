@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
-const ListItem = ({ item, onDeleteItem, onDone, onImportant }) => {
-
+const ListItem = ({ item, onDelete, onDone, onImportant }) => {
   return (
     <li className="list-group-item">
       <span className={`todo-list-item ${item.done ? 'done' : ''} ${item.important ? 'important' : ''}`}>
@@ -9,7 +8,7 @@ const ListItem = ({ item, onDeleteItem, onDone, onImportant }) => {
         <button onClick={() => onImportant(item.id)} type="button" className="btn btn-outline-success btn-sm float-end">
           <i className="fa fa-exclamation"></i>
         </button>
-        <button onClick={() => onDeleteItem(item.id)} type="button"
+        <button onClick={() => onDelete(item.id)} type="button"
           className="btn btn-outline-danger btn-sm float-end">
           <i className="fa fa-trash"></i>
         </button>
