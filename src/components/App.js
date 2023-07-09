@@ -70,13 +70,38 @@ const App = () => {
   const todo = tasks.length - done;
 
   const addItemHandler = (title) => {
-    alert(title)
+    const id = tasks[tasks.length - 1].id + 1;
+    const newTask = { id: id, title: title, done: false, important: false };
+    const newTasks = [...tasks];
+    newTasks.push(newTask);
+    setTasks(newTasks);
   }
 
+  const filterHandler = (type) => {
+    console.log(type);
+    let newTasks, filteredTasks;
+    switch (type) {
+      case 0:
+        return tasks;
+      // break;
+      case 1:
+        newTasks = [...tasks];
+        filteredTasks = newTasks.filter((el) => {
+          return el.done == false;
+        })
+      // break;
+      case 2:
+        newTasks = [...tasks];
+        filteredTasks = newTasks.filter((el) => {
+          return el.done == true;
+        })
+      // break;
+    }
+  }
   return (
     <div className="todo-app">
       <Header todo={todo} done={done} />
-      <Search />
+      <Search onFilter={(type) => console.log(filterHandler(type))} />
       <List onDelete={(id) => deleteItemHandler(id)} onDone={(id) => doneHandler(id)} onImportant={(id) => importantHandler(id)} tasks={tasks} />
       <AddItem onAdd={(title) => addItemHandler(title)} />
     </div>
