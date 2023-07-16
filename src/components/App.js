@@ -2,33 +2,20 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import Header from './Header';
 import Search from './Search';
+import Filter from './Filter';
 import List from './List';
 import AddItem from './AddItem';
 
 
 const App = () => {
+
   const initialData = [
     { id: 1, title: 'To drink coffee', done: true, important: true },
     { id: 2, title: 'To wash car', done: true, important: false },
     { id: 3, title: 'To do app', done: true, important: false },
   ]
   const [tasks, setTasks] = useState(initialData);
-  //Перенести state Tasks из комп List
-  // const [done, setDone] = useState(0);
-
-  // const getTasksHandler = (tasks) => {
-  //   // console.log(tasks);
-
-  //   const count = tasks.reduce((count, item) => {
-  //     if (item.done == true) {
-  //       return count + 1
-  //     } else {
-  //       return count
-  //     }
-  //   }, 0)
-
-  //   setDone(count);
-  // }
+  const [filter, setFilter] = useState(0);
 
   const importantHandler = (id) => {
     const ind = tasks.findIndex(item => {
@@ -77,8 +64,7 @@ const App = () => {
     setTasks(newTasks);
   }
 
-  const filterHandler = (type) => {
-    console.log(type);
+  const filterHandler = (type = 0) => {
     let newTasks, filteredTasks;
     switch (type) {
       case 0:
@@ -89,20 +75,29 @@ const App = () => {
         filteredTasks = newTasks.filter((el) => {
           return el.done == false;
         })
+        return filteredTasks;
       // break;
       case 2:
         newTasks = [...tasks];
         filteredTasks = newTasks.filter((el) => {
           return el.done == true;
         })
+        return filteredTasks;
       // break;
     }
   }
+
+  const filteredTasks = filterHandler(filter);
+
   return (
     <div className="todo-app">
       <Header todo={todo} done={done} />
-      <Search onFilter={(type) => console.log(filterHandler(type))} />
-      <List onDelete={(id) => deleteItemHandler(id)} onDone={(id) => doneHandler(id)} onImportant={(id) => importantHandler(id)} tasks={tasks} />
+      <div className="top-panel d-flex">
+        <Search onSearch={(value) => { setFilter(type) }} />
+        <Filter onFilter={(type) => { setFilter(type) }} />
+      </div>
+      {/* <Search onFilter={(type) => console.log(filterHandler(type))} /> */}
+      <List onDelete={(id) => deleteItemHandler(id)} onDone={(id) => doneHandler(id)} onImportant={(id) => importantHandler(id)} tasks={filteredTasks} />
       <AddItem onAdd={(title) => addItemHandler(title)} />
     </div>
   );
